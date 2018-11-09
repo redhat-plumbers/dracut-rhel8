@@ -1817,9 +1817,7 @@ if dracut_module_included "squash"; then
     done
 
     mv $initdir/init $initdir/init.stock
-    mv $initdir/shutdown $initdir/shutdown.stock
     ln -s squash/init.sh $initdir/init
-    ln -s squash/shutdown.sh $initdir/shutdown
 
     # Reinstall required files for the squash image setup script.
     # We have moved them inside the squashed image, but they need to be
