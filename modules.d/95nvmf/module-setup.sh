@@ -79,6 +79,8 @@ install() {
 
     inst_multiple ip sed
 
+    inst_script "${moddir}/nvmf-autoconnect.sh" /sbin/nvmf-autoconnect.sh
+
     inst_multiple nvme
     inst_multiple -o \
         "$systemdsystemunitdir/nvm*-connect@.service" \
