@@ -74,7 +74,7 @@ install() {
     VERSION+="dracut-$DRACUT_VERSION"
     PRETTY_NAME+="dracut-$DRACUT_VERSION (Initramfs)"
     VERSION_ID=$DRACUT_VERSION
-    ANSI_COLOR="0;34"
+    ANSI_COLOR="0;31"
 
     [ -e "${initdir}/usr/lib" ] || mkdir -m 0755 -p ${initdir}/usr/lib
     {
