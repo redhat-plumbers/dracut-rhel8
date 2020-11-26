@@ -277,14 +277,8 @@ rm -f -- $RPM_BUILD_ROOT%{_bindir}/mkinitrd
 rm -f -- $RPM_BUILD_ROOT%{_bindir}/lsinitrd
 %endif
 
-%if 0%{?fedora} || 0%{?rhel}
 echo 'hostonly="no"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/02-generic-image.conf
 echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/02-rescue.conf
-
-# FIXME: remove after F30
-mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/kernel/postinst.d
-install -m 0755 51-dracut-rescue-postinst.sh $RPM_BUILD_ROOT%{_sysconfdir}/kernel/postinst.d/51-dracut-rescue-postinst.sh
-%endif
 
 %files
 %if %{with doc}
@@ -477,11 +471,7 @@ install -m 0755 51-dracut-rescue-postinst.sh $RPM_BUILD_ROOT%{_sysconfdir}/kerne
 
 %files config-rescue
 %{dracutlibdir}/dracut.conf.d/02-rescue.conf
-%if 0%{?fedora} || 0%{?rhel}
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
-# FIXME: remove after F30
-%{_sysconfdir}/kernel/postinst.d/51-dracut-rescue-postinst.sh
-%endif
 
 %triggerin network -- dracut-network < 049-83.git20200525
 echo '# Since rhel-8.3 dracut moved to use NetworkManager
