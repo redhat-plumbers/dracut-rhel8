@@ -22,7 +22,7 @@ check() {
 }
 
 depends() {
-    echo "bash systemd-initrd"
+    echo "systemd-initrd"
     return 0
 }
 
