@@ -43,6 +43,7 @@ install() {
 
     inst_script "$moddir/rootfs-generator.sh" $systemdutildir/system-generators/dracut-rootfs-generator
 
+    mkdir -p "${initdir}/$systemdsystemunitdir/initrd.target.wants"
     for i in \
         dracut-cmdline.service \
         dracut-cmdline-ask.service \
