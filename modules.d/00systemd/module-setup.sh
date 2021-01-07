@@ -225,7 +225,7 @@ install() {
         systemd-ask-password-console.service \
         systemd-ask-password-plymouth.service \
         ; do
-        systemctl -q --root "$initdir" add-wants "$i" systemd-vconsole-setup.service
+        systemctl -q --root "$initdir" add-wants "$i" systemd-vconsole-setup.service 2>/dev/null
     done
 
     mkdir -p "$initdir/etc/systemd"
