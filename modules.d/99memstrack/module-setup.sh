@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 check() {
-    if type -P memstrack >/dev/null; then
+    if find_binary memstrack >/dev/null; then
         dinfo "memstrack is available"
         return 0
     fi
