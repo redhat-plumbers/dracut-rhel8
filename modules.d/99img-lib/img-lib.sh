@@ -9,7 +9,7 @@
 det_archive() {
     # NOTE: echo -e works in ash and bash, but not dash
     local bz="BZh" xz="$(echo -e '\xfd7zXZ')" gz="$(echo -e '\x1f\x8b')" zs="$(echo -e '\x28\xB5\x2F\xFD')"
-    local headerblock="$(dd ${1:+if=$1} bs=262 count=1 2>/dev/null)"
+    local headerblock="$(dd ${1:+if=$1} bs=262 count=1 2>/dev/null | tr -d '\0')"
     case "$headerblock" in
         $xz*) echo "xz" ;;
         $gz*) echo "gzip" ;;
