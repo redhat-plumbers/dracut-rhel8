@@ -1609,8 +1609,8 @@ for ((i=0; i < ${#include_src[@]}; i++)); do
             reset_dotglob="$(shopt -p dotglob)"
             shopt -q -s dotglob
             for objectname in "$src"/*; do
-                [[ -e "$objectname" || -h "$objectname" ]] || continue
-                if [[ -d "$objectname" ]]; then
+                [[ -e $objectname || -L $objectname ]] || continue
+                if [[ -d $objectname ]] && [[ ! -L $objectname ]]; then
                     # objectname is a directory, let's compute the final directory name
                     object_destdir=${destdir}/${objectname#$src/}
                     if ! [[ -e "$object_destdir" ]]; then
