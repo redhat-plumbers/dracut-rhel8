@@ -1316,6 +1316,66 @@ for dev in "${!host_fs_types[@]}"; do
     fi
 done
 
+[[ -d $dracutsysrootdir$dbus ]] \
+    || dbus=$(pkg-config dbus --variable=dbus 2> /dev/null)
+
+[[ -d $dracutsysrootdir$dbus ]] || dbus=/usr/share/dbus-1
+
+[[ -d $dracutsysrootdir$dbusconfdir ]] \
+    || dbusconfdir=$(pkg-config dbus --variable=dbusconfdir 2> /dev/null)
+
+[[ -d $dracutsysrootdir$dbusconfdir ]] || dbusconfdir=/etc/dbus-1
+
+[[ -d $dracutsysrootdir$dbusinterfaces ]] \
+    || dbusinterfaces=$(pkg-config dbus --variable=dbusinterfaces 2> /dev/null)
+
+[[ -d $dracutsysrootdir$dbusinterfaces ]] || dbusinterfaces=${dbus}/interfaces
+
+[[ -d $dracutsysrootdir$dbusinterfacesconfdir ]] \
+    || dbusinterfacesconfdir=$(pkg-config dbus --variable=dbusinterfacesconfdir 2> /dev/null)
+
+[[ -d $dracutsysrootdir$dbusinterfacesconfdir ]] || dbusinterfacesconfdir=${dbusconfdir}/interfaces
+
+[[ -d $dracutsysrootdir$dbusservices ]] \
+    || dbusservices=$(pkg-config dbus --variable=dbusservices 2> /dev/null)
+
+[[ -d $dracutsysrootdir$dbusservices ]] || dbusservices=${dbus}/services
+
+[[ -d $dracutsysrootdir$dbusservicesconfdir ]] \
+    || dbusservicesconfdir=$(pkg-config dbus --variable=dbusservicesconfdir 2> /dev/null)
+
+[[ -d $dracutsysrootdir$dbusservicesconfdir ]] || dbusservicesconfdir=${dbusconfdir}/services
+
+[[ -d $dracutsysrootdir$dbussession ]] \
+    || dbussession=$(pkg-config dbus --variable=dbussession 2> /dev/null)
+
+[[ -d $dracutsysrootdir$dbussession ]] || dbussession=${dbus}/session.d
+
+[[ -d $dracutsysrootdir$dbussessionconfdir ]] \
+    || dbussessionconfdir=$(pkg-config dbus --variable=dbussessionconfdir 2> /dev/null)
+
+[[ -d $dracutsysrootdir$dbussessionconfdir ]] || dbussessionconfdir=${dbusconfdir}/session.d
+
+[[ -d $dracutsysrootdir$dbussystem ]] \
+    || dbussystem=$(pkg-config dbus --variable=dbussystem 2> /dev/null)
+
+[[ -d $dracutsysrootdir$dbussystem ]] || dbussystem=${dbus}/system.d
+
+[[ -d $dracutsysrootdir$dbussystemconfdir ]] \
+    || dbussystemconfdir=$(pkg-config dbus --variable=dbussystemconfdir 2> /dev/null)
+
+[[ -d $dracutsysrootdir$dbussystemconfdir ]] || dbussystemconfdir=${dbusconfdir}/system.d
+
+[[ -d $dracutsysrootdir$dbussystemservices ]] \
+    || dbussystemservices=$(pkg-config dbus --variable=dbussystemservices 2> /dev/null)
+
+[[ -d $dracutsysrootdir$dbussystemservices ]] || dbussystemservices=${dbus}/system-services
+
+[[ -d $dracutsysrootdir$dbussystemservicesconfdir ]] \
+    || dbussystemservicesconfdir=$(pkg-config dbus --variable=dbussystemservicesconfdir 2> /dev/null)
+
+[[ -d $dracutsysrootdir$dbussystemservicesconfdir ]] || dbussystemservicesconfdir=${dbusconfdir}/system-services
+
 [[ -d $udevdir ]] \
     || udevdir="$(pkg-config udev --variable=udevdir 2>/dev/null)"
 if ! [[ -d "$udevdir" ]]; then
