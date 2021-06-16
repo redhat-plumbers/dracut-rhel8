@@ -8,9 +8,9 @@ check() {
 # called by dracut
 depends() {
     echo -n "kernel-network-modules "
-    if ! dracut_module_included "network-legacy" && [ -x "/usr/libexec/nm-initrd-generator" ] ; then
+    if ! dracut_module_included "network-legacy" && ! dracut_module_included "network-manager-daemon" && [ -x "/usr/libexec/nm-initrd-generator" ] ; then
         echo "network-manager"
-    else
+    elif ! dracut_module_included "network-manager-daemon" ; then
         echo "network-legacy"
     fi
     return 0
