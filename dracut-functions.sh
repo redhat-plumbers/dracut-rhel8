@@ -208,7 +208,7 @@ get_maj_min() {
 
     if ! [[ "$_out" ]]; then
     _majmin="$(stat -L -c '%t:%T' "$1" 2>/dev/null)"
-        out="$(printf "%s" "$((0x${_majmin%:*})):$((0x${_majmin#*:}))")"
+        _out="$(printf "%s" "$((0x${_majmin%:*})):$((0x${_majmin#*:}))")"
         if [[ $get_maj_min_cache_file ]]; then
             echo "$1 $_out" >> "$get_maj_min_cache_file"
     fi
