@@ -39,9 +39,10 @@ installpost() {
 
     # Copy dracut spec files out side of the squash image
     # so dracut rebuild and lsinitrd can work
+    mkdir -p "$initdir/usr/lib/dracut/"
     for file in "$squash_dir"/usr/lib/dracut/*; do
         [[ -f $file ]] || continue
-        DRACUT_RESOLVE_DEPS=1 dracutsysrootdir="$squash_dir" inst "${file#$squash_dir}"
+        cp "$file" "$initdir/${file#$squash_dir}"
     done
 
     # Install required modules and binaries for the squash image init script.
