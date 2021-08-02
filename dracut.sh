@@ -825,53 +825,6 @@ if [[ $_no_compress_l = "cat" ]]; then
     compress="cat"
 fi
 
-if ! [[ $compress ]]; then
-    # check all known compressors, if none specified
-    for i in pigz gzip lz4 lzop zstd lzma xz lbzip2 bzip2 cat; do
-        command -v "$i" &>/dev/null || continue
-        compress="$i"
-        break
-    done
-    if [[ $compress = cat ]]; then
-            printf "%s\n" "dracut: no compression tool available. Initramfs image is going to be big." >&2
-    fi
-fi
-
-# choose the right arguments for the compressor
-case $compress in
-    bzip2|lbzip2)
-        if [[ "$compress" =  lbzip2 ]] || command -v lbzip2 &>/dev/null; then
-            compress="lbzip2 -9"
-        else
-            compress="bzip2 -9"
-        fi
-        ;;
-    lzma)
-        compress="lzma -9 -T0"
-        ;;
-    xz)
-        compress="xz --check=crc32 --lzma2=dict=1MiB -T0"
-        ;;
-    gzip|pigz)
-        if [[ "$compress" = pigz ]] || command -v pigz &>/dev/null; then
-            compress="pigz -9 -n -T -R"
-        elif command -v gzip &>/dev/null && gzip --help 2>&1 | grep -q rsyncable; then
-            compress="gzip -n -9 --rsyncable"
-        else
-            compress="gzip -n -9"
-        fi
-        ;;
-    lzo|lzop)
-        compress="lzop -9"
-        ;;
-    lz4)
-        compress="lz4 -l -9"
-        ;;
-    zstd)
-       compress="zstd -15 -q -T0"
-       ;;
-esac
-
 [[ $hostonly = yes ]] && hostonly="-h"
 [[ $hostonly != "-h" ]] && unset hostonly
 
@@ -1847,6 +1800,53 @@ if [[ $create_early_cpio = yes ]]; then
         exit 1
     fi
 fi
+
+if ! [[ $compress ]]; then
+    # check all known compressors, if none specified
+    for i in pigz gzip lz4 lzop zstd lzma xz lbzip2 bzip2 cat; do
+        command -v "$i" &>/dev/null || continue
+        compress="$i"
+        break
+    done
+    if [[ $compress = cat ]]; then
+            printf "%s\n" "dracut: no compression tool available. Initramfs image is going to be big." >&2
+    fi
+fi
+
+# choose the right arguments for the compressor
+case $compress in
+    bzip2|lbzip2)
+        if [[ "$compress" =  lbzip2 ]] || command -v lbzip2 &>/dev/null; then
+            compress="lbzip2 -9"
+        else
+            compress="bzip2 -9"
+        fi
+        ;;
+    lzma)
+        compress="lzma -9 -T0"
+        ;;
+    xz)
+        compress="xz --check=crc32 --lzma2=dict=1MiB -T0"
+        ;;
+    gzip|pigz)
+        if [[ "$compress" = pigz ]] || command -v pigz &>/dev/null; then
+            compress="pigz -9 -n -T -R"
+        elif command -v gzip &>/dev/null && gzip --help 2>&1 | grep -q rsyncable; then
+            compress="gzip -n -9 --rsyncable"
+        else
+            compress="gzip -n -9"
+        fi
+        ;;
+    lzo|lzop)
+        compress="lzop -9"
+        ;;
+    lz4)
+        compress="lz4 -l -9"
+        ;;
+    zstd)
+       compress="zstd -15 -q -T0"
+       ;;
+esac
 
 if ! (
         umask 077; cd "$initdir"
