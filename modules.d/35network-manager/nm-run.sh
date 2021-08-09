@@ -22,7 +22,7 @@ do
     state=/run/NetworkManager/devices/$(cat $_i/ifindex)
     grep -q connection-uuid= $state 2>/dev/null || continue
     ifname=${_i##*/}
-    sed -n 's/root-path/new_root_path/p;s/next-server/new_next_server/p' <$state >/tmp/dhclient.$ifname.dhcpopts
+    sed -n 's/root-path/new_root_path/p;s/next-server/new_next_server/p;s/dhcp-bootfile/filename/p' <$state >/tmp/dhclient.$ifname.dhcpopts
     source_hook initqueue/online $ifname
     /sbin/netroot $ifname
 done
