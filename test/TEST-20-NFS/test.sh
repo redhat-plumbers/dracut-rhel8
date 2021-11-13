@@ -1,5 +1,13 @@
 #!/bin/bash
-TEST_DESCRIPTION="root filesystem on NFS"
+if [[ $NM ]]; then
+    USE_NETWORK="network-manager"
+    OMIT_NETWORK="network-legacy"
+else
+    USE_NETWORK="network-legacy"
+    OMIT_NETWORK="network-manager"
+fi
+
+TEST_DESCRIPTION="root filesystem on NFS with $USE_NETWORK"
 
 KVERSION=${KVERSION-$(uname -r)}
 
@@ -353,8 +361,8 @@ test_setup() {
 
     # Make client's dracut image
     $basedir/dracut.sh -l -i $TESTDIR/overlay / \
-        -o "plymouth dash" \
-        -a "debug watchdog" \
+        -o "plymouth dash ${OMIT_NETWORK}" \
+        -a "debug watchdog ${USE_NETWORK}" \
         -d "af_packet piix ide-gd_mod ata_piix sd_mod e1000 nfs sunrpc i6300esb" \
         --no-hostonly-cmdline -N \
         -f $TESTDIR/initramfs.testing $KVERSION || return 1

@@ -29,9 +29,8 @@ jobs:
                         "13",
                         "17",
                         "20",
-                        #"21", needs backport (NFS + NM)
+                        "21",
                         "40",
-                        #"41", needws backport (NBD + NM)
                         "98",
                 ]
             fail-fast: false
