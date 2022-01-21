@@ -126,7 +126,7 @@ install_iscsiroot() {
         "/etc/sysconfig/network-scripts/ifcfg-$ifname" \
         "/etc/sysconfig/network/ifcfg-$ifname" \
     ; do
-        [ -f "$_path" ] && bootproto=$(sed -n "s/BOOTPROTO='\?\([[:alpha:]]*6\?\)4\?/\1/p" "$_path")
+        [ -r "$_path" ] && bootproto=$(sed -n "s/BOOTPROTO='\?\([[:alpha:]]*6\?\)4\?/\1/p" "$_path")
     done
 
     if [ $bootproto ]; then
