@@ -124,13 +124,13 @@ do_fips()
             elif [ -d /boot/loader/entries ]; then
                 i=0
                 for bls in $(ls -d /boot/loader/entries/*.conf | sort -rV); do
-                  ((i++))
-
                   if [ $i -eq ${BOOT_IMAGE:-0} ] && [ -r "$bls" ]; then
                       BOOT_IMAGE="$(grep -e '^linux' "$bls" | grep -o ' .*$')"
                       BOOT_IMAGE=${BOOT_IMAGE:1}
                       break
                   fi
+
+                  ((i++))
                 done
             fi
         fi
