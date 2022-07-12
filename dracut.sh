@@ -1601,16 +1601,7 @@ done
 
 if [[ $kernel_only != yes ]]; then
     # make sure that library links are correct and up to date
-    for f in /etc/ld.so.conf /etc/ld.so.conf.d/*; do
-        [[ -f $f ]] && inst_simple "$f"
-    done
-    if ! ldconfig -r "$initdir"; then
-        if [[ $EUID = 0 ]]; then
-            derror "ldconfig exited ungracefully"
-        else
-            derror "ldconfig might need uid=0 (root) for chroot()"
-        fi
-    fi
+    build_ld_cache
 fi
 
 if [[ $do_hardlink = yes ]] && command -v hardlink >/dev/null; then
