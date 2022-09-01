@@ -47,6 +47,7 @@ install() {
         $systemdutildir/systemd-sysctl \
         $systemdutildir/systemd-modules-load \
         $systemdutildir/systemd-vconsole-setup \
+        $systemdutildir/systemd-sysroot-fstab-check \
         $systemdutildir/system-generators/systemd-fstab-generator \
         $systemdutildir/system-generators/systemd-gpt-auto-generator \
         \
