@@ -20,5 +20,5 @@ install() {
     inst_script "$moddir/start-thinpool-monitor.sh" "/bin/start-thinpool-monitor"
 
     inst "$moddir/start-thinpool-monitor.service" "$systemdsystemunitdir/start-thinpool-monitor.service"
-    $SYSTEMCTL -q --root "$initdir" add-wants initrd.target start-thinpool-monitor.service
+    systemctl -q --root "$initdir" add-wants initrd.target start-thinpool-monitor.service
 }
