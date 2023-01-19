@@ -79,6 +79,10 @@ export srcmods
     export hookdirs
 }
 
+DRACUT_LDD=${DRACUT_LDD:-ldd}
+DRACUT_TESTBIN=${DRACUT_TESTBIN:-/bin/sh}
+DRACUT_LDCONFIG=${DRACUT_LDCONFIG:-ldconfig}
+
 . $dracutbasedir/dracut-functions.sh
 
 # Detect lib paths
