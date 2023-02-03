@@ -122,6 +122,7 @@ nfs_already_mounted() {
     local server="$1" path="$2" localdir="" s="" p=""
     cat /proc/mounts | while read src mnt rest || [ -n "$src" ]; do
         splitsep ":" "$src" s p
+        p=${p%/}
         if [ "$server" = "$s" ]; then
             if [ "$path" = "$p" ]; then
                 echo $mnt
@@ -138,7 +139,7 @@ nfs_fetch_url() {
     local filepath="${path%/*}" filename="${path##*/}" mntdir=""
 
     # skip mount if server:/filepath is already mounted
-    mntdir=$(nfs_already_mounted "$server" "$path")
+    mntdir=$(nfs_already_mounted "$server" "$filepath")
     if [ -z "$mntdir" ]; then
         local mntdir="$(mkuniqdir /run nfs_mnt)"
         mount_nfs "$nfs:$server:$filepath${options:+:$options}" "$mntdir"
