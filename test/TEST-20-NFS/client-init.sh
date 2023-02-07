@@ -5,6 +5,10 @@ getcmdline() {
     done </proc/cmdline;
 }
 
+: > /dev/watchdog
+. /lib/dracut-lib.sh
+. /lib/url-lib.sh
+
 _dogetarg() {
     local _o _val _doecho
     unset _val
@@ -115,5 +119,27 @@ while read dev fs fstype opts rest || [ -n "$dev" ]; do
     echo "nfs-OK $dev $fstype $opts" > /dev/sda
     break
 done < /proc/mounts
->/dev/watchdog
+
+if [ "$fstype" = "nfs" -o "$fstype" = "nfs4" ]; then
+
+    serverip=${dev%:*}
+    path=${dev#*:}
+    echo serverip="${serverip}"
+    echo path="${path}"
+    echo /proc/mounts status
+    cat /proc/mounts
+
+    echo test:nfs_fetch_url nfs::"${serverip}":"${path}"/root/fetchfile
+    if nfs_fetch_url nfs::"${serverip}":"${path}"/root/fetchfile /run/nfsfetch.out; then
+        echo nfsfetch-OK
+        echo "nfsfetch-OK" | dd oflag=direct,dsync of=/dev/disk/by-id/ata-disk_marker2
+    fi
+else
+    echo nfsfetch-BYPASS fstype="${fstype}"
+    echo "nfsfetch-OK" | dd oflag=direct,dsync of=/dev/disk/by-id/ata-disk_marker2
+fi
+
+: > /dev/watchdog
+
+sync
 poweroff -f
