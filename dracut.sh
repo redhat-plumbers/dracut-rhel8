@@ -1302,6 +1302,12 @@ if ! [[ -d "$udevdir" ]]; then
     [[ -e /usr/lib/udev/collect ]] && udevdir=/usr/lib/udev
 fi
 
+[[ -d $udevconfdir ]] \
+    || udevconfdir="$(pkg-config udev --variable=udevconfdir 2>/dev/null)"
+if ! [[ -d "$udevconfdir" ]]; then
+    [[ -d /etc/udev ]] && udevconfdir=/etc/udev
+fi
+
 [[ -d $systemdutildir ]] \
     || systemdutildir=$(pkg-config systemd --variable=systemdutildir 2>/dev/null)
 
