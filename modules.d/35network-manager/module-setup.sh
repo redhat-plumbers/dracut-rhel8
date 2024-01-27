@@ -32,7 +32,7 @@ install() {
 
     inst NetworkManager
     inst /usr/libexec/nm-initrd-generator
-    inst_multiple -o teamd dhclient
+    inst_multiple -o teamd dhclient ping ping6 arping
     inst_hook cmdline 99 "$moddir/nm-config.sh"
     inst_hook initqueue/settled 99 "$moddir/nm-run.sh"
     inst_rules 85-nm-unmanaged.rules
