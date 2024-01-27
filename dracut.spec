@@ -127,6 +127,9 @@ Requires: iputils
 Requires: iproute
 Requires: (NetworkManager >= 1.20 or dhclient)
 Suggests: NetworkManager
+Suggests: %{_bindir}/ping
+Suggests: %{_bindir}/ping6
+Suggests: %{_bindir}/arping
 Obsoletes: dracut-generic < 008
 Provides:  dracut-generic = %{version}-%{release}
 
