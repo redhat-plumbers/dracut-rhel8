@@ -446,6 +446,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/95znet
 %endif
 %{dracutlibdir}/modules.d/99uefi-lib
+%ghost %config(missingok) %{_sysconfdir}/dracut.conf.d/50-network-legacy.conf
 
 %files caps
 %{dracutlibdir}/modules.d/02caps
